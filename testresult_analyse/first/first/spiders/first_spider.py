@@ -2,17 +2,14 @@ from scrapy.spider import Spider
 from scrapy.selector import Selector
     
 class FirstSpider(Spider):
-    name = "dmoz"
+    name = "testresult"
     allowed_domains = ["dmoz.org"]
     start_urls = [
-        "http://www.dmoz.org/Computers/Programming/Languages/Python/Books"
+        "http://9.111.114.58:8080/job/OSP4.1_OS_Test_BD_PowerVC/9/testReport/"
     ]
 
     def parse(self,response):
         sel = Selector(response)
-        sites = sel.xpath('//ul/li')
+        sites = sel.xpath('//body/table[@id="main-table"]/tr/td[@id="main-panel"]/table/tr/td[1]/a[@class="model-link inside"]/@href').extract()
         for site in sites:
-            title = site.xpath('a/text()').extract()
-            link = site.xpath('a/@href').extract()
-            desc = site.xpath('text()').extract()
-            print title,link,desc
+            print site
